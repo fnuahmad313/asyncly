@@ -7,3 +7,5 @@ dist/
 /src/generated/prisma
 
 /generated/prisma
+
+SETUP.md
