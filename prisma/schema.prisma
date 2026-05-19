@@ -50,8 +50,25 @@ model Job {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs JobLog[]
+  webhookLogs WebhookLog[]
 
   @@map("jobs")
+}
+
+model WebhookLog {
+  id          String   @id @default(cuid())
+  jobId       String
+  url         String
+  payload     Json
+  statusCode  Int?
+  success     Boolean  @default(false)
+  attempt     Int      @default(1)
+  error       String?
+  createdAt   DateTime @default(now())
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@map("webhook_logs")
 }
 
 model JobLog {

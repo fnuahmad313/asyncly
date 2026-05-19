@@ -3,7 +3,7 @@ import { redis } from "../config/redis";
 import { processJob } from "./job.processor";
 import { prisma } from "../config/database";
 
-console.log("🔧 Worker starting...");
+console.log("Worker starting...");
 
 const worker = new Worker(
   "job-queue",
@@ -30,7 +30,6 @@ worker.on("error", (err) => {
   console.error("Worker error:", err);
 });
 
-// Graceful shutdown
 process.on("SIGTERM", async () => {
   console.log("Shutting down worker...");
   await worker.close();

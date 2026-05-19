@@ -124,4 +124,20 @@ export const jobController = {
       res.status(404).json({ success: false, message: (e as Error).message });
     }
   },
+
+  async getWebhookLogs(req: AuthenticatedRequest, res: Response) {
+    try {
+      const logs = await jobService.getWebhookLogs(
+        req.user!.userId,
+        req.params.id as string,
+      );
+      res.status(200).json({
+        success: true,
+        message: "Webhook logs retrieved successfully",
+        data: logs,
+      });
+    } catch (e) {
+      res.status(404).json({ success: false, message: (e as Error).message });
+    }
+  },
 };

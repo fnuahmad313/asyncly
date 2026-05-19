@@ -1,7 +1,7 @@
 import { prisma } from "../config/database";
 import { redis } from "../config/redis";
-import { wsManager } from "../config/websocket";
-
+import { cache } from "../utils/cache";
+import { webhookService } from "../services/webhook.service";
 interface JobData {
   jobId: string;
   userId: string;
@@ -61,8 +61,9 @@ export async function processJob(data: JobData): Promise<void> {
   const { jobId, userId, type, payload } = data;
 
   await writeLog(jobId, `Job started: type=${type}`);
+  await cache.delete(`job:${jobId}`);
 
-  await prisma.job.update({
+  const job = await prisma.job.update({
     where: { id: jobId },
     data: { status: "PROCESSING" },
   });
@@ -77,15 +78,15 @@ export async function processJob(data: JobData): Promise<void> {
 
   try {
     await writeLog(jobId, `Processing job type: ${type}`);
-
     const result = await processJobByType(type, payload);
 
+    await cache.delete(`job:${jobId}`);
     await prisma.job.update({
       where: { id: jobId },
       data: { status: "DONE", result: result as object },
     });
 
-    await writeLog(jobId, `Job completed successfully`);
+    await writeLog(jobId, "Job completed successfully");
 
     await publishJobEvent(userId, jobId, {
       type: "job:done",
@@ -93,9 +94,20 @@ export async function processJob(data: JobData): Promise<void> {
       result,
       message: "Job completed successfully",
     });
+
+    if (job.webhookUrl) {
+      await webhookService.deliver(jobId, job.webhookUrl, {
+        jobId,
+        type,
+        status: "DONE",
+        result,
+        timestamp: new Date().toISOString(),
+      });
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
 
+    await cache.delete(`job:${jobId}`);
     await prisma.job.update({
       where: { id: jobId },
       data: { status: "FAILED" },
@@ -108,6 +120,16 @@ export async function processJob(data: JobData): Promise<void> {
       status: "FAILED",
       error: message,
     });
+
+    if (job.webhookUrl) {
+      await webhookService.deliver(jobId, job.webhookUrl, {
+        jobId,
+        type,
+        status: "FAILED",
+        error: message,
+        timestamp: new Date().toISOString(),
+      });
+    }
 
     throw error;
   }

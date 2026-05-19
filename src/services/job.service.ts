@@ -74,4 +74,10 @@ export const jobService = {
     }
     return logs;
   },
+
+  async getWebhookLogs(userId: string, jobId: string) {
+    const logs = await jobRepository.findWebhookLogs(jobId, userId);
+    if (!logs) throw new Error("Job not found");
+    return logs;
+  },
 };
