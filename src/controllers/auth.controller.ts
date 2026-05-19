@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { success, z } from "zod";
-import { authService } from "../services/auth.services";
+import { authService } from "../services/auth.service";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email format"),
