@@ -9,3 +9,4 @@ dist/
 /generated/prisma
 .env.docker
 SETUP.md
+coverage/
