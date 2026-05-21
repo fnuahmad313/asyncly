@@ -2,7 +2,7 @@ import type { Response } from "express";
 import { z } from "zod";
 import { jobService } from "../services/job.service";
 import type { AuthenticatedRequest } from "../middlewares/authenticate";
-import type { JobStatus } from "../../generated/prisma/client";
+import type { JobStatus } from "../types/job.types";
 
 const JOB_STATUSES: JobStatus[] = [
   "PENDING",

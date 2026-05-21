@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "worker": "tsx watch src/workers/worker.ts",
@@ -20,6 +19,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@types/dotenv": "^6.1.1",
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.76.10",
     "dotenv": "^17.4.2",
@@ -36,7 +36,7 @@
     "@types/express": "^5.0.6",
     "@types/ioredis": "^4.28.10",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^25.8.0",
+    "@types/node": "^25.9.0",
     "@types/pg": "^8.20.0",
     "@types/ws": "^8.18.1",
     "eslint": "^10.4.0",

@@ -1,7 +1,7 @@
 import { prisma } from "../config/database";
 import { cache } from "../utils/cache";
 import type { CreateJobInput, getJobsQuery } from "../types/job.types";
-import type { JobStatus } from "../../generated/prisma/client";
+import type { JobStatus } from "../types/job.types";
 
 const JOB_CACHE_TTL = 60;
 const JOB_DONE_CACHE_TTL = 300;
