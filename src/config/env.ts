@@ -1,18 +1,20 @@
+import { z } from "zod";
 import dotenv from "dotenv";
-import { number, z } from "zod";
 
 dotenv.config();
+
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
   PORT: z.string().transform(Number),
   APP_NAME: z.string(),
-  DATABASE_URL: z.string().url(),
+  DATABASE_URL: z.string().min(1),
   JWT_ACCESS_SECRET: z.string().min(1),
   JWT_REFRESH_SECRET: z.string().min(1),
   JWT_ACCESS_EXPIRES_IN: z.string().min(1),
   JWT_REFRESH_EXPIRES_IN: z.string().min(1),
   REDIS_HOST: z.string().min(1),
   REDIS_PORT: z.string().transform(Number),
+  WEBHOOK_SECRET: z.string().min(1),
 });
 
 const parsed = envSchema.safeParse(process.env);
