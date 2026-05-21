@@ -1,22 +1,21 @@
-import Redis from "ioredis";
+import { Redis } from "ioredis";
 import { env } from "./env";
 
-export const redis = new Redis({
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
-  maxRetriesPerRequest: null,
-});
+const redisConfig = process.env.REDIS_URL
+  ? { lazyConnect: true, maxRetriesPerRequest: null }
+  : {
+      host: env.REDIS_HOST,
+      port: env.REDIS_PORT,
+      maxRetriesPerRequest: null,
+    };
 
-export const redisSub = new Redis({
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
-  maxRetriesPerRequest: null,
-});
+export const redis = process.env.REDIS_URL
+  ? new Redis(process.env.REDIS_URL, { maxRetriesPerRequest: null })
+  : new Redis(redisConfig);
 
-redis.on("connect", () => {
-  console.log("Redis connected");
-});
+export const redisSub = process.env.REDIS_URL
+  ? new Redis(process.env.REDIS_URL, { maxRetriesPerRequest: null })
+  : new Redis(redisConfig);
 
-redis.on("error", (err) => {
-  console.error("Redis error:", err);
-});
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("error", (err) => console.error("Redis error:", err));

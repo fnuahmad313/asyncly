@@ -12,8 +12,8 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET: z.string().min(1),
   JWT_ACCESS_EXPIRES_IN: z.string().min(1),
   JWT_REFRESH_EXPIRES_IN: z.string().min(1),
-  REDIS_HOST: z.string().min(1),
-  REDIS_PORT: z.string().transform(Number),
+  REDIS_HOST: z.string().optional(),
+  REDIS_PORT: z.string().transform(Number).optional(),
   WEBHOOK_SECRET: z.string().min(1),
 });
 
