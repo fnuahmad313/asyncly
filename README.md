@@ -104,7 +104,7 @@ Asyncly is a RESTful API that allows developers to register, monitor, and manage
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/username/asyncly.git
+git clone https://github.com/fnuahmad313/asyncly
 cd asyncly
 
 # 2. Install dependencies
@@ -175,8 +175,8 @@ Copy `.env.example` to `.env` and fill in the values.
 ### Base URL
 
 ```
-Development : http://localhost:3000
-Production  : https://your-app.up.railway.app
+Development : http://localhost:3000/api
+Production  : https://asyncly-production.up.railway.app/api
 ```
 
 ### Response Format
@@ -255,7 +255,7 @@ Register a new user account.
 
 **Request:**
 ```bash
-curl -X POST https://your-app.up.railway.app/auth/register \
+curl -X POST https://asyncly-production.up.railway.app/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "developer@example.com",
@@ -312,7 +312,7 @@ Authenticate and receive access & refresh tokens.
 
 **Request:**
 ```bash
-curl -X POST https://your-app.up.railway.app/auth/login \
+curl -X POST https://asyncly-production.up.railway.app/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "developer@example.com",
@@ -356,7 +356,7 @@ Obtain a new access token using a valid refresh token.
 
 **Request:**
 ```bash
-curl -X POST https://your-app.up.railway.app/auth/refresh \
+curl -X POST https://asyncly-production.up.railway.app/api/auth/refresh \
   -H "Content-Type: application/json" \
   -d '{
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -396,7 +396,7 @@ Invalidate the current refresh token.
 
 **Request:**
 ```bash
-curl -X POST https://your-app.up.railway.app/auth/logout \
+curl -X POST https://asyncly-production.up.railway.app/api/auth/logout \
   -H "Content-Type: application/json" \
   -d '{
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -446,7 +446,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl -X POST https://your-app.up.railway.app/jobs \
+curl -X POST https://asyncly-production.up.railway.app/api/jobs \
   -H "Authorization: Bearer <accessToken>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -527,7 +527,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl "https://your-app.up.railway.app/jobs?page=1&limit=5&status=DONE" \
+curl "https://asyncly-production.up.railway.app/api/jobs?page=1&limit=5&status=DONE" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
@@ -574,7 +574,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl "https://your-app.up.railway.app/jobs/cmpc20vzh0000x4ubhy1vc7so" \
+curl "https://asyncly-production.up.railway.app/api/jobs/cmpc20vzh0000x4ubhy1vc7so" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
@@ -620,7 +620,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl -X DELETE "https://your-app.up.railway.app/jobs/cmpc20vzh0000x4ubhy1vc7so" \
+curl -X DELETE "https://asyncly-production.up.railway.app/api/jobs/cmpc20vzh0000x4ubhy1vc7so" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
@@ -666,7 +666,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl "https://your-app.up.railway.app/jobs/cmpc20vzh0000x4ubhy1vc7so/logs" \
+curl "https://asyncly-production.up.railway.app/api/jobs/cmpc20vzh0000x4ubhy1vc7so/logs" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
@@ -717,7 +717,7 @@ Authorization: Bearer <accessToken>
 
 **Request:**
 ```bash
-curl "https://your-app.up.railway.app/jobs/cmpc20vzh0000x4ubhy1vc7so/webhook-logs" \
+curl "https://asyncly-production.up.railway.app/api/jobs/cmpc20vzh0000x4ubhy1vc7so/webhook-logs" \
   -H "Authorization: Bearer <accessToken>"
 ```
 
