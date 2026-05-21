@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ Asyncly
+# Asyncly
 
 **Distributed Task Queue API**
 
@@ -17,7 +17,7 @@ A production-ready backend service for processing background jobs asynchronously
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
