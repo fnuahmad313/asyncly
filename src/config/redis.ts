@@ -20,5 +20,5 @@ export const redisSub = process.env.REDIS_URL
       ...redisOptions,
     });
 
-redis.on("connect", () => console.log("✅ Redis connected"));
-redis.on("error", (err) => console.error("❌ Redis error:", err));
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("error", (err) => console.error("Redis error:", err));
